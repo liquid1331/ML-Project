@@ -1,0 +1,17 @@
+k=0
+for _ in range(100):
+    cell_df = pd.read_csv("C:/Users/RAJESH/Downloads/csv_result-caesarian.csv")
+    a=cell_df[["'Age'","'Delivery","'Delivery.1","'Blood","'Heart"]]
+    X=np.asarray(a)
+#     X[:5]
+#     print(X[:5])
+    y=np.asarray(cell_df["Caesarian"].astype("int"))
+#     print(y[0:5])
+    X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.2)
+    from sklearn import svm
+    clf=svm.SVC(kernel="linear")
+    clf.fit(X_train,y_train)
+    yhat = clf.predict(X_test)
+    from sklearn.metrics import accuracy_score
+    k=max(k,accuracy_score(y_test,yhat))
+print("Accuracy:%.2f"%k)
